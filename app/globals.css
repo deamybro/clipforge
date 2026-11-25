@@ -1,27 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 160 70% 67%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 53%;
+    --accent: 160 70% 67%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 160 70% 67%;
+    --radius: 0.75rem;
+
+    /* ClipForge custom tokens */
+    --cf-bg: #0A0A0A;
+    --cf-surface: #141414;
+    --cf-border: #2A2A2A;
+    --cf-accent: #6EE7B7;
+    --cf-accent-hover: #4FDBA8;
+    --cf-text: #F5F5F5;
+    --cf-muted: #888888;
+    --cf-danger: #EF4444;
+    --cf-success: #22C55E;
+  }
+
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
+    --primary: 160 70% 40%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 4%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 160 70% 40%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 160 70% 40%;
+
+    --cf-bg: #FAFAFA;
+    --cf-surface: #FFFFFF;
+    --cf-border: #E5E5E5;
+    --cf-accent: #059669;
+    --cf-accent-hover: #047857;
+    --cf-text: #0A0A0A;
+    --cf-muted: #6B7280;
+    --cf-danger: #DC2626;
+    --cf-success: #16A34A;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: rgba(110, 231, 183, 0.3);
+    color: #F5F5F5;
+  }
+}
+
+@layer components {
+  /* ClipForge card style */
+  .cf-card {
+    @apply rounded-xl border border-[var(--cf-border)] bg-[var(--cf-surface)];
+    backdrop-filter: blur(12px);
+  }
+
+  /* Glowing accent border */
+  .cf-glow {
+    box-shadow: 0 0 0 1px rgba(110, 231, 183, 0.3), 0 0 20px rgba(110, 231, 183, 0.1);
+  }
+
+  /* Gradient text */
+  .cf-gradient-text {
+    background: linear-gradient(135deg, #6EE7B7 0%, #34D399 50%, #10B981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Animated gradient background */
+  .cf-hero-gradient {
+    background: radial-gradient(ellipse at 50% 0%, rgba(110, 231, 183, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(52, 211, 153, 0.06) 0%, transparent 50%),
+                #0A0A0A;
+  }
+
+  /* Glass morphism */
+  .cf-glass {
+    background: rgba(20, 20, 20, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Progress bar shine animation */
+  .cf-progress-shine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cf-progress-shine::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shine 1.5s infinite;
+  }
+
+  @keyframes shine {
+    to { left: 150%; }
+  }
+
+  /* Pulse dot */
+  .cf-pulse-dot {
+    @apply w-2 h-2 rounded-full bg-[var(--cf-accent)];
+    animation: pulseDot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--cf-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--cf-border);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--cf-muted);
+  }
+
+  /* Input focus ring */
+  .cf-input {
+    @apply w-full rounded-lg border border-[var(--cf-border)] bg-[var(--cf-surface)] px-4 py-3 text-sm text-[var(--cf-text)] placeholder-[var(--cf-muted)] outline-none transition-all duration-200;
+  }
+  .cf-input:focus {
+    border-color: var(--cf-accent);
+    box-shadow: 0 0 0 3px rgba(110, 231, 183, 0.1);
+  }
+
+  /* Button variants */
+  .cf-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold transition-all duration-200;
+    background: linear-gradient(135deg, #6EE7B7 0%, #34D399 100%);
+    color: #0A0A0A;
+  }
+  .cf-btn-primary:hover {
+    background: linear-gradient(135deg, #4FDBA8 0%, #10B981 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(110, 231, 183, 0.3);
+  }
+  .cf-btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .cf-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--cf-border)] px-6 py-3 text-sm font-semibold text-[var(--cf-text)] transition-all duration-200;
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .cf-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(110, 231, 183, 0.3);
+  }
+
+  .cf-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-[var(--cf-muted)] transition-all duration-200;
+  }
+  .cf-btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--cf-text);
+  }
+
+  /* Score badge colors */
+  .score-high {
+    @apply border border-green-400/30 bg-green-400/10 text-green-400;
+  }
+  .score-mid {
+    @apply border border-yellow-400/30 bg-yellow-400/10 text-yellow-400;
+  }
+  .score-low {
+    @apply border border-red-400/30 bg-red-400/10 text-red-400;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-gradient {
+    background: linear-gradient(135deg, #6EE7B7 0%, #34D399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .animate-glow {
+    animation: glow 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 20px rgba(110, 231, 183, 0.1); }
+    to { box-shadow: 0 0 40px rgba(110, 231, 183, 0.25); }
   }
 }

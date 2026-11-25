@@ -2,12 +2,14 @@
 
 # dependencies
 /node_modules
+**/node_modules/
 /.pnp
 .pnp.js
 .yarn/install-state.gz
 
 # testing
 /coverage
+/test-artifacts/
 
 # next.js
 /.next/
@@ -34,3 +36,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated Firebase function output
+/firebase/functions/lib/
+
+# local prompt/extraction scratch files
+/dump_line.txt
+/extract*.py
+/sub*.txt
+/ui_raw*.txt
+/user_prompt.txt
